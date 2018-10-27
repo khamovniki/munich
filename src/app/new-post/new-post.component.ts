@@ -127,18 +127,13 @@ export class NewPostComponent {
     if ((tags || '').trim()) {
       this.tags.push(tags.trim());
     }
-    this.http.post(`api/tags/create/${tags}`, {});
-  }
-
-  openNewTagDialog() {
-    console.log('New tag');
-    const dialogRef = this.dialog.open(NewTagComponent, {
-      width: '250px'
-    });
-    dialogRef.afterClosed().subscribe(
-      result => {
-        console.log('Dialog is closed');
+    this.http.post(`api/tags/create/${tags}`, {}).subscribe(
+      () => {
+        console.log('Send');
+      },
+      () => {
+        console.log('Not send');
       }
-    );
+    )
   }
 }
