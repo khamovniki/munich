@@ -5,9 +5,10 @@ import { AppComponent } from './app.component';
 import {NewPostComponent} from './new-post/new-post.component';
 import {AppRoutingModule} from './app-routing.module';
 import {
+  MatAutocompleteModule,
   MatButtonModule,
-  MatCardModule, MatCheckboxModule,
-  MatDatepickerModule,
+  MatCardModule, MatCheckboxModule, MatChipsModule,
+  MatDatepickerModule, MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -18,11 +19,16 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {HttpClientModule} from '@angular/common/http';
 import { QuillModule } from 'ngx-quill';
+import {NewTagComponent} from './new-post/new-tag/new-tag.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NewPostComponent
+    NewPostComponent,
+    NewTagComponent
+  ],
+  entryComponents: [
+    NewTagComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +43,9 @@ import { QuillModule } from 'ngx-quill';
     NgxMaterialTimepickerModule.forRoot(),
     MatIconModule,
     MatCheckboxModule,
+    MatDialogModule,
+    MatChipsModule,
+    MatAutocompleteModule,
     QuillModule,
     ReactiveFormsModule,
     HttpClientModule

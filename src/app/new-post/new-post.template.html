@@ -1,22 +1,43 @@
+<script src="new-post.component.ts"></script>
 <div class="new-post">
   <mat-card>
     <form [formGroup]="postForm">
       <mat-label>Post</mat-label>
-      <quill-editor [modules]="modules" formControlName="text"></quill-editor>
+      <quill-editor [modules]="modules" formControlName="text" [style]="{height: '300px'}"></quill-editor>
       <!--<mat-form-field>-->
-      <!--<textarea matInput-->
-                <!--cdkTextareaAutosize-->
-                <!--#autosize="cdkTextareaAutosize"-->
-                <!--cdkAutosizeMinRows="2"-->
-                <!--cdkAutosizeMaxRows="30"-->
-                <!--placeholder="Text"-->
-                <!--formControlName="text"-->
-      <!--&gt;</textarea>-->
+      <!--<mat-select placeholder="Tags" formControlName="tags" multiple>-->
+      <!--<mat-option *ngFor="let tag of tagList" [value]="tag">{{tag}}</mat-option>-->
+      <!--</mat-select>-->
       <!--</mat-form-field>-->
+
       <mat-form-field>
-        <mat-select placeholder="Tags" formControlName="tags" multiple>
-          <mat-option *ngFor="let tag of tagList" [value]="tag">{{tag}}</mat-option>
-        </mat-select>
+        <mat-chip-list #tagList>
+          <mat-chip
+            *ngFor="let tag of tags"
+            [selectable]="selectable"
+            [removable]="removable"
+            (removed)="remove(tag)">
+            {{tag}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input
+            placeholder="New tag..."
+            #tagInput
+            formControlName="tags"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="tagList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+            {{tag}}
+          </mat-option>
+          <mat-option *ngIf="postForm.controls.tags.value !== ''">
+            <button mat-button style="width: 100%; text-align: left; padding: 0">Add tag "{{postForm.controls.tags.value}}"</button>
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
 
       <section>
@@ -31,7 +52,8 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Choose a time" aria-label="24hr format" [ngxTimepicker]="fullTime" [format]="24"
+          <input matInput placeholder="Choose a time" aria-label="24hr format" [ngxTimepicker]="fullTime"
+                 [format]="24"
                  formControlName="time">
           <ngx-material-timepicker #fullTime></ngx-material-timepicker>
         </mat-form-field>
