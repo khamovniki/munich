@@ -83,15 +83,25 @@ export class NewPostComponent {
     this.postForm.controls.tags.setValue(null);
   }
   sendPost() {
-    // this.http.post('api')
-    const {text, date, time} = this.postForm.value;
-    // const timestamp = moment(`${date.format('MM/DD/YYYY')} ${time}`);
-    const body = {
-      text,
-      tags: this.tags
-      // timestamp
-    };
-    console.log(JSON.stringify(body));
+    const {text} = this.postForm.value;
+    if (this.postForm.controls.schedule.value) {
+      const {date, time} = this.postForm.value;
+      const timestamp = moment(`${date.format('MM/DD/YYYY')} ${time}`);
+      const body = {
+        text,
+        tags: this.tags,
+        timestamp
+      };
+      console.log(JSON.stringify(body));
+      this.http.post('/api/post', body);
+    } else {
+      const body = {
+        text,
+        tags: this.tags
+      };
+      console.log(JSON.stringify(body));
+      this.http.post('/api/post', body);
+    }
   }
   openNewTagDialog() {
     console.log('New tag');
