@@ -34,8 +34,8 @@
           <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
             {{tag}}
           </mat-option>
-          <mat-option *ngIf="postForm.controls.tags.value !== ''">
-            <button mat-button style="width: 100%; text-align: left; padding: 0" (click)="addNewTag()">Add tag "{{postForm.controls.tags.value}}"</button>
+          <mat-option *ngIf="postForm.value.tags !== ''">
+            <button mat-button style="width: 100%; text-align: left; padding: 0" (click)="addNewTag()">Add tag "{{postForm.value.tags}}"</button>
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
@@ -44,11 +44,11 @@
         <mat-checkbox formControlName="schedule">Schedule</mat-checkbox>
       </section>
 
-      <div class="schedule" *ngIf="postForm.controls.schedule.value">
+      <div class="schedule" *ngIf="postForm.value.schedule">
         <mat-form-field>
           <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker touchUi #picker></mat-datepicker>
+          <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field>

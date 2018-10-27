@@ -80,11 +80,11 @@ export class NewPostComponent {
     }
   }
   selected(event: MatAutocompleteSelectedEvent) {
-    if (event.option.viewValue !== `Add tag "${this.postForm.controls.tags.value}"`) {
+    if (this.tags.indexOf(event.option.viewValue) !== -1) {
       this.tags.push(event.option.viewValue);
-      this.tagInput.nativeElement.value = '';
-      this.postForm.controls.tags.setValue(null);
     }
+    this.tagInput.nativeElement.value = '';
+    this.postForm.controls.tags.setValue(null);
   }
   sendPost() {
     const {text} = this.postForm.value;
@@ -128,8 +128,6 @@ export class NewPostComponent {
       this.tags.push(tags.trim());
     }
     this.http.post(`api/tags/create/${tags}`, {});
-    this.tagInput.nativeElement.value = '';
-    this.postForm.controls.tags.setValue(null);
   }
 
   openNewTagDialog() {
