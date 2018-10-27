@@ -1,2 +1,17 @@
+.new-post {
+  width: 800px;
+  margin: 0 auto;
+}
 
+.new-post textarea {
+  width: 100%;
+}
 
+mat-form-field {
+  width: 100%;
+}
+
+.send-button {
+  display: block;
+  margin: 0 auto;
+}
