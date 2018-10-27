@@ -92,7 +92,7 @@ export class NewPostComponent {
       const {date, time} = this.postForm.value;
       const timestamp = moment(`${date.format('MM/DD/YYYY')} ${time}`);
       const body = {
-        text,
+        message: text,
         tags: this.tags,
         timestamp
       };
@@ -107,7 +107,7 @@ export class NewPostComponent {
       );
     } else {
       const body = {
-        text,
+        message: text,
         tags: this.tags
       };
       console.log(JSON.stringify(body));
