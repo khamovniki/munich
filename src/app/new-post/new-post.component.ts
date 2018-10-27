@@ -79,14 +79,13 @@ export class NewPostComponent {
       this.tags.splice(index, 1);
     }
   }
-
-  // selected(event: MatAutocompleteSelectedEvent) {
-  //   if (event.option.viewValue !== `Add tag "${this.postForm.controls.tags.value}"`) {
-  //     this.tags.push(event.option.viewValue);
-  //     this.tagInput.nativeElement.value = '';
-  //     this.postForm.controls.tags.setValue(null);
-  //   }
-  // }
+  selected(event: MatAutocompleteSelectedEvent) {
+    if (event.option.viewValue !== `Add tag "${this.postForm.controls.tags.value}"`) {
+      this.tags.push(event.option.viewValue);
+      this.tagInput.nativeElement.value = '';
+      this.postForm.controls.tags.setValue(null);
+    }
+  }
   sendPost() {
     const {text} = this.postForm.value;
     if (this.postForm.controls.schedule.value) {
@@ -98,14 +97,28 @@ export class NewPostComponent {
         timestamp
       };
       console.log(JSON.stringify(body));
-      this.http.post('/api/post', body);
+      this.http.post('/api/post', body).subscribe(
+        () => {
+          console.log('Send');
+        },
+        () => {
+          console.log('Not send');
+        }
+      );
     } else {
       const body = {
         text,
         tags: this.tags
       };
       console.log(JSON.stringify(body));
-      this.http.post('/api/post', body);
+      this.http.post('/api/post', body).subscribe(
+        () => {
+          console.log('Send');
+        },
+        () => {
+          console.log('Not send');
+        }
+      );
     }
   }
 
