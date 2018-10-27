@@ -1,8 +1,8 @@
 <script src="new-post.component.ts"></script>
 <div class="new-post">
   <mat-card>
+    <h1>Post</h1>
     <form [formGroup]="postForm">
-      <mat-label>Post</mat-label>
       <quill-editor [modules]="modules" formControlName="text" [style]="{height: '300px'}"></quill-editor>
       <!--<mat-form-field>-->
       <!--<mat-select placeholder="Tags" formControlName="tags" multiple>-->

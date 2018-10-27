@@ -54,7 +54,15 @@ export class NewPostComponent {
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.tagList.filter(tag => tag.toLowerCase().indexOf(filterValue) === 0);
+    const filterArray =  this.tagList.filter(tag => tag.toLowerCase().indexOf(filterValue) === 0);
+    return filterArray.filter(tag => {
+      for (let i = 0; i < this.tags.length; i++) {
+        if (tag.toLowerCase() === this.tags[i].toLowerCase()) {
+          return false;
+        }
+      }
+      return true;
+    });
   }
 
   add(event: MatChipInputEvent) {
