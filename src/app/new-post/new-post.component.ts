@@ -62,6 +62,7 @@ export class NewPostComponent {
       const input = event.input;
       const value = event.value;
       if (this.tagList.indexOf(value) !== -1) {
+        console.log('+++');
         if ((value || '').trim()) {
           this.tags.push(value.trim());
         }
@@ -79,13 +80,15 @@ export class NewPostComponent {
       this.tags.splice(index, 1);
     }
   }
+
   selected(event: MatAutocompleteSelectedEvent) {
-    if (this.tags.indexOf(event.option.viewValue) !== -1) {
+    if (event.option.viewValue.slice(0, 7) !== 'Add tag') {
       this.tags.push(event.option.viewValue);
     }
     this.tagInput.nativeElement.value = '';
     this.postForm.controls.tags.setValue(null);
   }
+
   sendPost() {
     const {text} = this.postForm.value;
     if (this.postForm.controls.schedule.value) {
@@ -126,6 +129,7 @@ export class NewPostComponent {
     const tags = this.postForm.controls.tags.value;
     if ((tags || '').trim()) {
       this.tags.push(tags.trim());
+      this.tagList.push(tags.trim());
     }
     this.http.post(`api/tags/create/${tags}`, {}).subscribe(
       () => {
@@ -134,6 +138,6 @@ export class NewPostComponent {
       () => {
         console.log('Not send');
       }
-    )
+    );
   }
 }
