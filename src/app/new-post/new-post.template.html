@@ -1,16 +1,18 @@
 <div class="new-post">
   <mat-card>
     <form [formGroup]="postForm">
-      <mat-form-field>
-      <textarea matInput
-                cdkTextareaAutosize
-                #autosize="cdkTextareaAutosize"
-                cdkAutosizeMinRows="2"
-                cdkAutosizeMaxRows="30"
-                placeholder="Text"
-                formControlName="text"
-      ></textarea>
-      </mat-form-field>
+      <mat-label>Post</mat-label>
+      <quill-editor [modules]="modules" formControlName="text"></quill-editor>
+      <!--<mat-form-field>-->
+      <!--<textarea matInput-->
+                <!--cdkTextareaAutosize-->
+                <!--#autosize="cdkTextareaAutosize"-->
+                <!--cdkAutosizeMinRows="2"-->
+                <!--cdkAutosizeMaxRows="30"-->
+                <!--placeholder="Text"-->
+                <!--formControlName="text"-->
+      <!--&gt;</textarea>-->
+      <!--</mat-form-field>-->
       <mat-form-field>
         <mat-select placeholder="Tags" formControlName="tags" multiple>
           <mat-option *ngFor="let tag of tagList" [value]="tag">{{tag}}</mat-option>

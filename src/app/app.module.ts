@@ -17,6 +17,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {HttpClientModule} from '@angular/common/http';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import {HttpClientModule} from '@angular/common/http';
     NgxMaterialTimepickerModule.forRoot(),
     MatIconModule,
     MatCheckboxModule,
+    QuillModule,
     ReactiveFormsModule,
     HttpClientModule
   ],

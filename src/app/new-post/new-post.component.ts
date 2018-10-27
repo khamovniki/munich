@@ -6,8 +6,6 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 
 import * as moment from 'moment';
 import {HttpClient} from '@angular/common/http';
-// tslint:disable-next-line:no-duplicate-imports
-// import {default as _rollupMoment} from 'moment';
 
 @Component({
   selector: 'app-new-post',
@@ -27,10 +25,18 @@ export class NewPostComponent {
     time: new FormControl('')
   });
   tagList: string[] = ['Lol', 'Kek'];
+  modules = {};
   constructor(private http: HttpClient) {
+    this.modules = {
+      toolbar: [['bold'], ['italic'], ['link']]
+    };
     this.http.get('api/tags/list').subscribe((tags: [string]) => this.tagList = tags);
   }
   sendPost() {
+    // this.postForm.value.date.setTime(this.postForm.value.time);
     console.log(this.postForm.value);
+  }
+  setFocus($event) {
+    $event.focus();
   }
 }
