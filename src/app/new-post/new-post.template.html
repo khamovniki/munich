@@ -30,12 +30,12 @@
             [matChipInputAddOnBlur]="addOnBlur"
             (matChipInputTokenEnd)="add($event)">
         </mat-chip-list>
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-autocomplete #auto="matAutocomplete">
           <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
             {{tag}}
           </mat-option>
           <mat-option *ngIf="postForm.controls.tags.value !== ''">
-            <button mat-button style="width: 100%; text-align: left; padding: 0">Add tag "{{postForm.controls.tags.value}}"</button>
+            <button mat-button style="width: 100%; text-align: left; padding: 0" (click)="addNewTag()">Add tag "{{postForm.controls.tags.value}}"</button>
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>

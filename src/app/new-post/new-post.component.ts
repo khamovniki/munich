@@ -39,6 +39,7 @@ export class NewPostComponent {
   modules = {};
   @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
+
   constructor(private http: HttpClient, public dialog: MatDialog) {
     this.modules = {
       toolbar: [['bold'], ['italic'], ['link']]
@@ -49,17 +50,18 @@ export class NewPostComponent {
       map((tag: string | null) => tag ? this._filter(tag) : this.tagList.slice())
     );
   }
+
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.tagList.filter(tag => tag.toLowerCase().indexOf(filterValue) === 0);
   }
+
   add(event: MatChipInputEvent) {
-    console.log('+++');
     if (!this.matAutocomplete.isOpen) {
       const input = event.input;
       const value = event.value;
-      // if (this.tagList.indexOf(value) !== -1) {
+      if (this.tagList.indexOf(value) !== -1) {
         if ((value || '').trim()) {
           this.tags.push(value.trim());
         }
@@ -67,21 +69,24 @@ export class NewPostComponent {
           input.value = '';
         }
         this.postForm.controls.tags.setValue(null);
-      // }
+      }
     }
   }
+
   remove(tag: string) {
     const index = this.tags.indexOf(tag);
     if (index >= 0) {
       this.tags.splice(index, 1);
     }
   }
-  selected(event: MatAutocompleteSelectedEvent) {
-    console.log('selected');
-    this.tags.push(event.option.viewValue);
-    this.tagInput.nativeElement.value = '';
-    this.postForm.controls.tags.setValue(null);
-  }
+
+  // selected(event: MatAutocompleteSelectedEvent) {
+  //   if (event.option.viewValue !== `Add tag "${this.postForm.controls.tags.value}"`) {
+  //     this.tags.push(event.option.viewValue);
+  //     this.tagInput.nativeElement.value = '';
+  //     this.postForm.controls.tags.setValue(null);
+  //   }
+  // }
   sendPost() {
     const {text} = this.postForm.value;
     if (this.postForm.controls.schedule.value) {
@@ -103,6 +108,17 @@ export class NewPostComponent {
       this.http.post('/api/post', body);
     }
   }
+
+  addNewTag() {
+    const tags = this.postForm.controls.tags.value;
+    if ((tags || '').trim()) {
+      this.tags.push(tags.trim());
+    }
+    this.http.post(`api/tags/create/${tags}`, {});
+    this.tagInput.nativeElement.value = '';
+    this.postForm.controls.tags.setValue(null);
+  }
+
   openNewTagDialog() {
     console.log('New tag');
     const dialogRef = this.dialog.open(NewTagComponent, {
