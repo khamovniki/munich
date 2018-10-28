@@ -1,24 +1,23 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 
-import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-
 import * as moment from 'moment';
 import {HttpClient} from '@angular/common/http';
 import {MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog} from '@angular/material';
-import {NewTagComponent} from './new-tag/new-tag.component';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {DateTimeAdapter, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE} from 'ng-pick-datetime';
+import {OWL_MOMENT_DATE_TIME_FORMATS} from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time-format.class';
+import {MomentDateTimeAdapter} from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time-adapter.class';
 
 @Component({
   selector: 'app-new-post',
   templateUrl: 'new-post.template.html',
   styleUrls: ['new-post.style.css'],
   providers: [
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
+    {provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE]},
+    {provide: OWL_DATE_TIME_FORMATS, useValue: OWL_MOMENT_DATE_TIME_FORMATS},
   ]
 })
 export class NewPostComponent {
@@ -26,8 +25,7 @@ export class NewPostComponent {
     text: new FormControl(''),
     tags: new FormControl(''),
     schedule: new FormControl(false),
-    date: new FormControl(''),
-    time: new FormControl('')
+    timestamp: new FormControl(''),
   });
   tags: string[] = [];
   tagList: string[] = [];
@@ -70,7 +68,6 @@ export class NewPostComponent {
       const input = event.input;
       const value = event.value;
       if (this.tagList.indexOf(value) !== -1) {
-        console.log('+++');
         if ((value || '').trim()) {
           this.tags.push(value.trim());
         }
@@ -90,7 +87,7 @@ export class NewPostComponent {
   }
 
   selected(event: MatAutocompleteSelectedEvent) {
-    if (event.option.viewValue.slice(0, 7) !== 'Add tag') {
+    if (event.option.viewValue.slice(0, 7) !== 'Add tag' && this.tags.indexOf(event.option.viewValue) === -1) {
       this.tags.push(event.option.viewValue);
     }
     this.tagInput.nativeElement.value = '';
@@ -98,17 +95,13 @@ export class NewPostComponent {
   }
 
   sendPost() {
-    const {text} = this.postForm.value;
-    if (this.postForm.controls.schedule.value) {
-      const {date, time} = this.postForm.value;
-      const timestamp = moment(`${date.format('MM/DD/YYYY')} ${time}`);
-      const body = {
-        message: text,
-        tags: this.tags,
-        timestamp
-      };
-      console.log(JSON.stringify(body));
-      this.http.post('/api/post', body).subscribe(
+    const {text: message, timestamp} = this.postForm.value;
+    const body = {
+      message,
+      tags: this.tags,
+      timestamp: moment(timestamp) || null
+    };
+    this.http.post('/api/post', body).subscribe(
         () => {
           console.log('Send');
         },
@@ -116,21 +109,6 @@ export class NewPostComponent {
           console.log('Not send');
         }
       );
-    } else {
-      const body = {
-        message: text,
-        tags: this.tags
-      };
-      console.log(JSON.stringify(body));
-      this.http.post('/api/post', body).subscribe(
-        () => {
-          console.log('Send');
-        },
-        () => {
-          console.log('Not send');
-        }
-      );
-    }
   }
 
   addNewTag() {

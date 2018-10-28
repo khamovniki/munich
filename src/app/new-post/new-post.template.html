@@ -1,15 +1,10 @@
 <script src="new-post.component.ts"></script>
 <div class="new-post">
   <mat-card>
-    <h1>Post</h1>
+    <h1>Пост</h1>
     <form [formGroup]="postForm">
-      <quill-editor [modules]="modules" formControlName="text" [style]="{height: '300px'}"></quill-editor>
-      <!--<mat-form-field>-->
-      <!--<mat-select placeholder="Tags" formControlName="tags" multiple>-->
-      <!--<mat-option *ngFor="let tag of tagList" [value]="tag">{{tag}}</mat-option>-->
-      <!--</mat-select>-->
-      <!--</mat-form-field>-->
-
+      <quill-editor [modules]="modules" formControlName="text" [style]="{height: '300px'}"
+                    placeholder="Введите текст"></quill-editor>
       <mat-form-field>
         <mat-chip-list #tagList>
           <mat-chip
@@ -21,7 +16,7 @@
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
           </mat-chip>
           <input
-            placeholder="New tag..."
+            placeholder="Теги"
             #tagInput
             formControlName="tags"
             [matAutocomplete]="auto"
@@ -34,32 +29,28 @@
           <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
             {{tag}}
           </mat-option>
-          <mat-option *ngIf="postForm.value.tags !== ''">
-            <button mat-button style="width: 100%; text-align: left; padding: 0" (click)="addNewTag()">Add tag "{{postForm.value.tags}}"</button>
+          <mat-option *ngIf="postForm.value.tags !== '' && tags.indexOf(postForm.value.tags) === -1">
+            <button mat-button style="width: 100%; text-align: left; padding: 0" (click)="addNewTag()">Add tag
+              "{{postForm.value.tags}}"
+            </button>
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
 
       <section>
-        <mat-checkbox formControlName="schedule">Schedule</mat-checkbox>
+        <mat-checkbox formControlName="schedule">Отложенная публикация</mat-checkbox>
       </section>
 
       <div class="schedule" *ngIf="postForm.value.schedule">
         <mat-form-field>
-          <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="date">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input matInput placeholder="Choose a time" aria-label="24hr format" [ngxTimepicker]="fullTime"
-                 [format]="24"
-                 formControlName="time">
-          <ngx-material-timepicker #fullTime></ngx-material-timepicker>
+          <input matInput placeholder="Date Time:"
+                 formControlName="timestamp"
+                 [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+          <owl-date-time #dt></owl-date-time>
         </mat-form-field>
       </div>
 
-      <button mat-button (click)="sendPost()" class="send-button">Send Post</button>
+      <button mat-button (click)="sendPost()" class="send-button">Опубликовать</button>
     </form>
   </mat-card>
 </div>
