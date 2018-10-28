@@ -95,7 +95,6 @@ export class NewPostComponent {
       this.tags.push(event.option.viewValue);
     }
     this.tagInput.nativeElement.value = '';
-    this.postForm.controls.tags.setValue(null);
   }
 
   sendPost() {
