@@ -90,7 +90,8 @@ export class NewPostComponent {
   }
 
   selected(event: MatAutocompleteSelectedEvent) {
-    if (event.option.viewValue.slice(0, 7) !== 'Add tag' && this.tags.indexOf(event.option.viewValue) === -1) {
+    console.log('Kek');
+    if (event.option.viewValue.slice(0, 12) !== 'Добавить тег' && this.tags.indexOf(event.option.viewValue) === -1) {
       this.tags.push(event.option.viewValue);
     }
     this.tagInput.nativeElement.value = '';
@@ -117,12 +118,13 @@ export class NewPostComponent {
 
   addNewTag() {
     const tags = this.postForm.controls.tags.value;
-    if ((tags || '').trim()) {
-      this.tags.push(tags.trim());
-      this.tagList.push(tags.trim());
-    }
     this.http.post(`api/tags/create/${tags}`, {}).subscribe(
       () => {
+        if ((tags || '').trim()) {
+          this.tags.push(tags.trim());
+          this.tagList.push(tags.trim());
+        }
+        this.postForm.controls.tags.setValue(null);
         this.openSnackBar('Добавлен новый тег', { duration: 3000 });
       },
       () => {
@@ -130,7 +132,7 @@ export class NewPostComponent {
       }
     );
   }
-  private openSnackBar(message: string, config: MatSnackBarConfig) {
-    this.snackBar.open(message, null, config);
+  private openSnackBar(message: string, configForSnack: MatSnackBarConfig) {
+    this.snackBar.open(message, null, configForSnack);
   }
 }

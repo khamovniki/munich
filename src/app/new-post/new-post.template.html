@@ -30,7 +30,7 @@
             {{tag}}
           </mat-option>
           <mat-option *ngIf="postForm.value.tags !== '' && tags.indexOf(postForm.value.tags) === -1">
-            <button mat-button style="width: 100%; text-align: left; padding: 0" (click)="addNewTag()">Add tag
+            <button mat-button style="width: 100%; text-align: left; padding: 0" (click)="addNewTag()">Добавить тег
               "{{postForm.value.tags}}"
             </button>
           </mat-option>
