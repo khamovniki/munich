@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {AuthService} from '../services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,7 +15,7 @@ export class SignInComponent {
     password: new FormControl('')
   });
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(private http: HttpClient, private authService: AuthService, private router: Router) {
   }
 
   signIn() {
@@ -27,6 +28,7 @@ export class SignInComponent {
       (body: string) => {
         console.log(body);
         this.authService.authorize(body);
+        this.router.navigate(['new-post']);
       },
       () => {
         console.log('Error');
