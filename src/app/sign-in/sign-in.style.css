@@ -1,0 +1,49 @@
+.sign-in-page {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: auto;
+}
+
+mat-card {
+  max-width: 550px;
+  margin: 0 auto;
+  overflow: auto;
+  padding: 24px 40px;
+}
+
+mat-card-title {
+  width: 100%;
+  text-align: center;
+}
+
+.sign-in-form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.sign-in-action {
+  width: 88px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.sign-in-action button {
+  margin-bottom: 10px;
+}
+
+.sign-in-action a {
+  font-size: 12px;
+  font-weight: 500;
+  color: #0000EE;
+}
+
+.sign-in-action a:hover {
+  cursor: pointer;
+}

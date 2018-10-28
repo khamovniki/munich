@@ -1,0 +1,19 @@
+<div class="sign-in-page">
+  <mat-card>
+    <mat-card-title>Sign in</mat-card-title>
+    <div class="sig-in-form">
+      <form [formGroup]="signInForm">
+        <mat-form-field>
+          <input matInput placeholder="Username" formControlName="username">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" placeholder="Password" formControlName="password">
+        </mat-form-field>
+        <div class="sign-in-action">
+          <button mat-raised-button color="primary" (click)="signIn()">Sign in</button>
+          <a routerLink="/sign-up">Sign Up</a>
+        </div>
+      </form>
+    </div>
+  </mat-card>
+</div>

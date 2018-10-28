@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import { AppComponent } from './app.component';
 import {NewPostComponent} from './new-post/new-post.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -19,15 +19,18 @@ import {HttpClientModule} from '@angular/common/http';
 import { QuillModule } from 'ngx-quill';
 import {NewTagComponent} from './new-post/new-tag/new-tag.component';
 import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
+import {SignUpComponent} from './sign-up/sign-up.component';
+import {SignInComponent} from './sign-in/sign-in.component';
+import {AuthService} from './services/auth.service';
+import {AuthGuard} from './guards/auth.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
     NewPostComponent,
-    NewTagComponent
-  ],
-  entryComponents: [
-    NewTagComponent
+    NewTagComponent,
+    SignUpComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +54,8 @@ import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule{
+}
