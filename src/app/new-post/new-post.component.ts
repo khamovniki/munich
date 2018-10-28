@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 
 import * as moment from 'moment';
@@ -8,17 +8,13 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {DateTimeAdapter, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE} from 'ng-pick-datetime';
-import {OWL_MOMENT_DATE_TIME_FORMATS} from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time-format.class';
-import {MomentDateTimeAdapter} from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time-adapter.class';
+// import {OWL_MOMENT_DATE_TIME_FORMATS} from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time-format.class';
+// import {MomentDateTimeAdapter} from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time-adapter.class';
 
 @Component({
   selector: 'app-new-post',
   templateUrl: 'new-post.template.html',
-  styleUrls: ['new-post.style.css'],
-  providers: [
-    {provide: DateTimeAdapter, useClass: MomentDateTimeAdapter, deps: [OWL_DATE_TIME_LOCALE]},
-    {provide: OWL_DATE_TIME_FORMATS, useValue: OWL_MOMENT_DATE_TIME_FORMATS},
-  ]
+  styleUrls: ['new-post.style.css']
 })
 export class NewPostComponent {
   postForm = new FormGroup({
