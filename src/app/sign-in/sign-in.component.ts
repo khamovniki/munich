@@ -20,7 +20,7 @@ export class SignInComponent {
   signIn() {
     console.log(this.signInForm.value);
     const {username, password} = this.signInForm.value;
-    this.http.post('api/signIp', {
+    this.http.post('api/signIn', {
       username,
       password
     }).subscribe(
