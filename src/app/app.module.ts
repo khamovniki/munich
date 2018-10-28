@@ -15,7 +15,7 @@ import {
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { QuillModule } from 'ngx-quill';
 import {NewTagComponent} from './new-post/new-tag/new-tag.component';
 import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
@@ -23,6 +23,7 @@ import {SignUpComponent} from './sign-up/sign-up.component';
 import {SignInComponent} from './sign-in/sign-in.component';
 import {AuthService} from './services/auth.service';
 import {AuthGuard} from './guards/auth.guard';
+import {TokenInterceptor} from './interceptor/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,14 @@ import {AuthGuard} from './guards/auth.guard';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+    AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule{
