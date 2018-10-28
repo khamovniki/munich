@@ -6,6 +6,11 @@ const appRoutes: Routes = [
   {
     path: 'new-post',
     component: NewPostComponent
+  },
+  {
+    path: '',
+    redirectTo: 'new-post',
+    pathMatch: 'full'
   }
 ];
 

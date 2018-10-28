@@ -11,7 +11,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatSelectModule
+  MatSelectModule, MatSnackBarModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -44,6 +44,7 @@ import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
     MatDialogModule,
     MatChipsModule,
     MatAutocompleteModule,
+    MatSnackBarModule,
     QuillModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,

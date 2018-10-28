@@ -14,7 +14,7 @@ mat-form-field {
 
 .send-button {
   display: block;
-  margin: 0 auto;
+  margin: 0 0 0 auto;
 }
 
 .editor {
@@ -31,5 +31,5 @@ mat-form-field {
 }
 
 mat-card h1 {
-  margin: 0;
+  margin: 0 0 10px 0;
 }

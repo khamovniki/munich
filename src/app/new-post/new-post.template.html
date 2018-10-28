@@ -1,7 +1,7 @@
 <script src="new-post.component.ts"></script>
 <div class="new-post">
   <mat-card>
-    <h1>Пост</h1>
+    <h1>Создать пост</h1>
     <form [formGroup]="postForm">
       <quill-editor [modules]="modules" formControlName="text" [style]="{height: '300px'}"
                     placeholder="Введите текст"></quill-editor>
@@ -50,7 +50,7 @@
         </mat-form-field>
       </div>
 
-      <button mat-button (click)="sendPost()" class="send-button">Опубликовать</button>
+      <button mat-raised-button color="primary" (click)="sendPost()" class="send-button">Опубликовать</button>
     </form>
   </mat-card>
 </div>

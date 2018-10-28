@@ -3,9 +3,16 @@ import {FormControl, FormGroup} from '@angular/forms';
 
 import * as moment from 'moment';
 import {HttpClient} from '@angular/common/http';
-import {MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog} from '@angular/material';
+import {
+  MatAutocomplete,
+  MatAutocompleteSelectedEvent,
+  MatChipInputEvent,
+  MatDialog,
+  MatSnackBar,
+  MatSnackBarConfig
+} from '@angular/material';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {Observable} from 'rxjs';
+import {config, Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {DateTimeAdapter, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE} from 'ng-pick-datetime';
 // import {OWL_MOMENT_DATE_TIME_FORMATS} from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time-format.class';
@@ -34,7 +41,7 @@ export class NewPostComponent {
   @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
-  constructor(private http: HttpClient, public dialog: MatDialog) {
+  constructor(private http: HttpClient, public snackBar: MatSnackBar) {
     this.modules = {
       toolbar: [['bold'], ['italic'], ['link']]
     };
@@ -100,9 +107,10 @@ export class NewPostComponent {
     this.http.post('/api/post', body).subscribe(
         () => {
           console.log('Send');
+          this.openSnackBar('Пост будет опубликован', { duration: 3000 });
         },
         () => {
-          console.log('Not send');
+          this.openSnackBar('Что то пошло не так', { duration: 3000 });
         }
       );
   }
@@ -115,11 +123,14 @@ export class NewPostComponent {
     }
     this.http.post(`api/tags/create/${tags}`, {}).subscribe(
       () => {
-        console.log('Send');
+        this.openSnackBar('Добавлен новый тег', { duration: 3000 });
       },
       () => {
-        console.log('Not send');
+        this.openSnackBar('При добавлении тега произошла ошибка', { duration: 3000 });
       }
     );
+  }
+  private openSnackBar(message: string, config: MatSnackBarConfig) {
+    this.snackBar.open(message, null, config);
   }
 }
