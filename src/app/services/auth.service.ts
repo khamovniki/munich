@@ -9,7 +9,9 @@ export class AuthService {
     return this._token;
   }
   set token(newValue) {
-    localStorage.setItem(LOCAL_STORAGE_NAME, newValue);
+    if (!newValue) {
+      localStorage.clear();
+    }
     this._token = newValue;
   }
   constructor() {
